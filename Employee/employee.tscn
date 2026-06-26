@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bt3jhkvk1wx1i"]
+
+[ext_resource type="Script" uid="uid://deqg8fyx4x4pa" path="res://Employee/employee.gd" id="1_44iv1"]
+[ext_resource type="Texture2D" uid="uid://ci1goat53kqyr" path="res://Employee/Sprites/manager_sheet.png" id="2_cn64o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_12j5o"]
+radius = 10.049875
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=21978692]
+input_pickable = true
+script = ExtResource("1_44iv1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=467847859]
+position = Vector2(0, -8)
+texture = ExtResource("2_cn64o")
+hframes = 6
+vframes = 3
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=325691669]
+visible = false
+position = Vector2(-2, -29)
+polygon = PackedVector2Array(-21, -17, 25, -17, 25, 26, -22, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=340003672]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_12j5o")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

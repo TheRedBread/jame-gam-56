@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://vjfdl4gdjbln"]
+
+[ext_resource type="Script" uid="uid://grs3yy6r0kpj" path="res://main_scene.gd" id="1_0f027"]
+[ext_resource type="PackedScene" uid="uid://cx1vt6kltnyfo" path="res://Pyramid/pyramid.tscn" id="2_2c62f"]
+
+[node name="MainScene" type="Node2D" unique_id=235254048]
+script = ExtResource("1_0f027")
+
+[node name="Button" type="Button" parent="." unique_id=399880628]
+offset_left = 375.0
+offset_top = 35.0
+offset_right = 496.0
+offset_bottom = 66.0
+text = "new employee"
+
+[node name="Pyramid" parent="." unique_id=491428056 instance=ExtResource("2_2c62f")]
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

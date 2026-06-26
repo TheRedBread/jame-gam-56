@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cx1vt6kltnyfo"]
+
+[ext_resource type="Texture2D" uid="uid://r0ddvs6n7cs5" path="res://Pyramid/marchewabaza.png" id="1_1ho82"]
+[ext_resource type="Script" uid="uid://bcoqjhayn2fjf" path="res://Pyramid/zone.gd" id="1_w6cvi"]
+[ext_resource type="PackedScene" uid="uid://cy67je4ukchlx" path="res://workstations/carrot.tscn" id="3_ngofd"]
+
+[node name="Pyramid" type="Node2D" unique_id=491428056]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=181575074]
+texture = ExtResource("1_1ho82")
+centered = false
+
+[node name="ManagementZone" type="Area2D" parent="." unique_id=711058399 groups=["employee_zone"]]
+position = Vector2(253, 148)
+script = ExtResource("1_w6cvi")
+tier_type = 2
+default_position = Vector2(257, 104)
+
+[node name="ZoneCollision" type="CollisionPolygon2D" parent="ManagementZone" unique_id=2119722559]
+position = Vector2(4, -4)
+polygon = PackedVector2Array(117, -35, -119, -36, -1, -139)
+
+[node name="FactoryZone" type="Area2D" parent="." unique_id=335088745 groups=["employee_zone"]]
+position = Vector2(253, 148)
+script = ExtResource("1_w6cvi")
+tier_type = 1
+default_position = Vector2(256, 184)
+
+[node name="ZoneCollision" type="CollisionPolygon2D" parent="FactoryZone" unique_id=361255161]
+position = Vector2(-64, 80)
+polygon = PackedVector2Array(253, -39, -120, -39, -54, -118, 186, -117)
+
+[node name="FarmZone" type="Area2D" parent="." unique_id=253333552 groups=["employee_zone"]]
+position = Vector2(253, 148)
+script = ExtResource("1_w6cvi")
+station_type = ExtResource("3_ngofd")
+default_position = Vector2(257, 281)
+
+[node name="ZoneCollision" type="CollisionPolygon2D" parent="FarmZone" unique_id=1088756016]
+position = Vector2(-68, 176)
+polygon = PackedVector2Array(323, -42, -183, -41, -117, -132, 257, -131)

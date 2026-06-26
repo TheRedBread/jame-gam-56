@@ -23,7 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_3xwoe"]
 resource_name = "farm_idle"
-length = 0.033333335
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -123,7 +123,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_w8fxh"]
 resource_name = "worker_idle"
-length = 0.033333335
+length = 0.06666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -168,7 +168,6 @@ _data = {
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=21978692]
-collision_mask = 0
 input_pickable = true
 script = ExtResource("1_44iv1")
 

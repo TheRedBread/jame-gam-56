@@ -8,5 +8,3 @@ script = ExtResource("1_7sui4")
 
 [node name="CarrotSprite" type="Sprite2D" parent="." unique_id=612112437]
 texture = ExtResource("2_5t08l")
-
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1983032746]

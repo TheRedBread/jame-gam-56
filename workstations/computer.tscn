@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c2a3ouqh3epx"]
+
+[ext_resource type="Script" uid="uid://kb8oc7wrjtru" path="res://computer.gd" id="1_3dnv1"]
+[ext_resource type="Texture2D" uid="uid://cjv34wr3shwul" path="res://workstations/managers_computer.png" id="2_36cib"]
+
+[node name="Computer" type="Node2D" unique_id=1970674620]
+script = ExtResource("1_3dnv1")
+
+[node name="ComputerSprite" type="Sprite2D" parent="." unique_id=522119460]
+position = Vector2(0, -8)
+texture = ExtResource("2_36cib")

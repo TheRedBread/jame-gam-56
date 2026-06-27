@@ -2,17 +2,37 @@
 
 [ext_resource type="Script" uid="uid://grs3yy6r0kpj" path="res://main_scene.gd" id="1_0f027"]
 [ext_resource type="PackedScene" uid="uid://cx1vt6kltnyfo" path="res://Pyramid/pyramid.tscn" id="2_2c62f"]
+[ext_resource type="Theme" uid="uid://3b6jfloh1m1l" path="res://UI/black_and_white_theme/black_and_white.tres" id="2_d5x1h"]
+[ext_resource type="PackedScene" uid="uid://ytctmgrnepmk" path="res://UI/selling_interface.tscn" id="3_gyfs4"]
 
 [node name="MainScene" type="Node2D" unique_id=235254048]
 script = ExtResource("1_0f027")
 
 [node name="Button" type="Button" parent="." unique_id=399880628]
-offset_left = 375.0
-offset_top = 35.0
-offset_right = 496.0
-offset_bottom = 66.0
+offset_left = 384.0
+offset_top = 14.0
+offset_right = 505.0
+offset_bottom = 45.0
+theme = ExtResource("2_d5x1h")
 text = "new employee"
 
 [node name="Pyramid" parent="." unique_id=491428056 instance=ExtResource("2_2c62f")]
+
+[node name="CarrotCounter" type="Label" parent="." unique_id=493232259]
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 77.0
+offset_bottom = 34.0
+theme = ExtResource("2_d5x1h")
+text = "Carrots: "
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1593547567]
+position = Vector2(480, 275)
+
+[node name="SellingInterface" parent="." unique_id=563713991 instance=ExtResource("3_gyfs4")]
+offset_left = 55.0
+offset_top = 43.0
+offset_right = 55.0
+offset_bottom = 43.0
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -10,7 +10,8 @@ enum State {
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 var wage_expectancy: float
-var working_speed: float = 80.0
+var working_speed: float = 1.0
+var walking_speed: float = 25.0
 var corruption: float
 var satisfaction: float
 
@@ -52,7 +53,7 @@ func _run_ai(delta: float) -> void:
 		EmployeeTypes.EmployeeType.FARMER:
 			_farmer_ai(delta)
 		EmployeeTypes.EmployeeType.WORKER:
-			pass
+			_worker_ai(delta)
 		EmployeeTypes.EmployeeType.MANAGER:
 			_manager_ai(delta)
 
@@ -78,7 +79,26 @@ func _farmer_ai(delta: float) -> void:
 				_reset_to_idle()
 				return
 			global_position = target_station.global_position
-			target_station.work(delta)
+			target_station.work(delta, working_speed)
+
+func _worker_ai(delta : float):
+	match state:
+		State.IDLE:
+			velocity = Vector2.ZERO
+			_find_station()
+			if target_station:
+				state = State.MOVING
+		State.MOVING:
+			if not is_instance_valid(target_station):
+				_reset_to_idle()
+				return
+			_move_to_station(target_station)
+		State.WORKING:
+			if not is_instance_valid(target_station):
+				_reset_to_idle()
+				return
+			global_position = target_station.global_position
+			target_station.work(delta, working_speed)
 
 func _manager_ai(delta: float) -> void:
 	match state:
@@ -96,7 +116,7 @@ func _manager_ai(delta: float) -> void:
 			if not is_instance_valid(target_station):
 				_reset_to_idle()
 				return
-			target_station.work(delta)
+			target_station.work(delta, working_speed)
 
 
 func _reset_to_idle():
@@ -124,7 +144,7 @@ func _move_to_station(station: WorkStation) -> void:
 
 
 func _move_towards_x(dx: float) -> void:
-	velocity.x = sign(dx) * working_speed
+	velocity.x = sign(dx) * walking_speed
 	velocity.y = 0
 
 
@@ -146,7 +166,6 @@ func _find_station() -> void:
 				if best and best.reserved_by == self:
 					best.reserved_by = null
 				best = child
-
 	target_station = best
 
 
@@ -251,3 +270,10 @@ func _play_anim(name: String):
 	
 	current_animation = name
 	animation_player.play(animation_name)
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	match anim_name:
+		"farm_work":
+			if target_station != null:
+				target_station.finish_work()

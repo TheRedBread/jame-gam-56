@@ -57,7 +57,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_0xr0f"]
 resource_name = "farm_work"
 length = 2.1
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -154,6 +153,22 @@ tracks/0/keys = {
 "values": [Vector2i(0, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(3, 4)]
 }
 
+[sub_resource type="Animation" id="Animation_uky7w"]
+resource_name = "worker_work"
+length = 0.46666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 4)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qoype"]
 _data = {
 &"RESET": SubResource("Animation_qoype"),
@@ -164,7 +179,8 @@ _data = {
 &"manager_walk": SubResource("Animation_tv34d"),
 &"manager_work": SubResource("Animation_s7vqn"),
 &"worker_idle": SubResource("Animation_w8fxh"),
-&"worker_walk": SubResource("Animation_whq0g")
+&"worker_walk": SubResource("Animation_whq0g"),
+&"worker_work": SubResource("Animation_uky7w")
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=21978692]
@@ -192,3 +208,4 @@ shape = SubResource("CircleShape2D_12j5o")
 libraries/ = SubResource("AnimationLibrary_qoype")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

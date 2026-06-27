@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cy67je4ukchlx"]
 
-[ext_resource type="Script" uid="uid://c7hi6gqdsmty7" path="res://carrot.gd" id="1_7sui4"]
+[ext_resource type="Script" uid="uid://c7hi6gqdsmty7" path="res://workstations/carrot.gd" id="1_7sui4"]
 [ext_resource type="Texture2D" uid="uid://di5d8r8qyxdbv" path="res://workstations/carrot.png" id="2_5t08l"]
 
 [node name="Carrot" type="Node2D" unique_id=150867123]

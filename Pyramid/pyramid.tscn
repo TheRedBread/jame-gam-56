@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bcoqjhayn2fjf" path="res://Pyramid/zone.gd" id="1_w6cvi"]
 [ext_resource type="PackedScene" uid="uid://cy67je4ukchlx" path="res://workstations/carrot.tscn" id="3_ngofd"]
 [ext_resource type="PackedScene" uid="uid://c2a3ouqh3epx" path="res://workstations/computer.tscn" id="3_ublmr"]
+[ext_resource type="PackedScene" uid="uid://hwoe7g8vvhue" path="res://workstations/fabricator.tscn" id="4_bcr5l"]
 
 [node name="Pyramid" type="Node2D" unique_id=491428056]
 
@@ -25,6 +26,7 @@ polygon = PackedVector2Array(117, -35, -119, -36, -1, -139)
 [node name="FactoryZone" type="Area2D" parent="." unique_id=335088745 groups=["employee_zone"]]
 position = Vector2(253, 148)
 script = ExtResource("1_w6cvi")
+station_type = ExtResource("4_bcr5l")
 tier_type = 1
 default_position = Vector2(256, 184)
 

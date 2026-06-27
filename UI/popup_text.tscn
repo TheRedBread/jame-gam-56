@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://bgwcj7ca15htt"]
+
+[ext_resource type="Script" uid="uid://duj8ud333lj4" path="res://UI/popup_text.gd" id="1_d7uui"]
+
+[sub_resource type="Animation" id="Animation_2wsq7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_d7uui"]
+resource_name = "popup"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.5666667),
+"transitions": PackedFloat32Array(0.36602122, 2.0705302, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.96666664),
+"transitions": PackedFloat32Array(0.3789291, 1),
+"update": 0,
+"values": [Vector2(0, 5), Vector2(0, -5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pc1lh"]
+_data = {
+&"RESET": SubResource("Animation_2wsq7"),
+&"popup": SubResource("Animation_d7uui")
+}
+
+[node name="PopupText" type="Node2D" unique_id=1433682151]
+script = ExtResource("1_d7uui")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2027481717]
+libraries/ = SubResource("AnimationLibrary_pc1lh")
+autoplay = &"popup"
+
+[node name="AnimationContainer" type="Node2D" parent="." unique_id=2145969705]

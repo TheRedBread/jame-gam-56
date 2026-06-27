@@ -1,6 +1,8 @@
 extends WorkStation
 
 @export var carrot_timer : float
+@onready var fabricator_animation_player: AnimationPlayer = $FabricatorAnimationPlayer
+@onready var button_animation_player: AnimationPlayer = $ButtonAnimationPlayer
 
 @export var init_progress : float = 100
 var progress : float = init_progress
@@ -17,14 +19,23 @@ func _physics_process(delta: float) -> void:
 	
 	if carrot_inside:
 		has_work_to_do = true
+		$ProgressBar.show()
 	else:
 		has_work_to_do = false
+		$ProgressBar.hide()
 
+func handle_animation():
+	if !fabricator_animation_player.is_playing():
+		$FabricatorAnimationPlayer.play("process_carrots")
+	if !button_animation_player.is_playing():
+		$FabricatorAnimationPlayer.play("press_button")
 
 func work(delta, employee):
-	progress -= (employee.working_speed)*delta*60
+	progress -= ((employee.working_speed)*delta*60)/50
+	$ProgressBar.value = init_progress - progress
 	if (progress <= 0):
 		finish_work()
+	handle_animation()
 
 func finish_work():
 	Global.processed_carrots += 1

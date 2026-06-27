@@ -9,12 +9,18 @@ enum State {
 }
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_2d: Sprite2D = $Sprite2D
+const RABBIT_PICKUP = preload("res://sounds/rabbit_pickup.wav")
+const RABBIT_DROP = preload("res://sounds/rabbit_drop.wav")
+const RABBIT_DOWNGRADE = preload("res://sounds/rabbit_downgrade.wav")
+const RABBIT_UPGRADE = preload("res://sounds/rabbit_upgrade.wav")
 
 var wage_expectancy: float
+var base_working_speed : float = 1.0
 var working_speed: float = 1.0
 var walking_speed: float = 25.0
-var corruption: float
-var satisfaction: float
+var corruption: float = 0
+var satisfaction: float = 1
+var corruption_predisposition : float = 0 
 
 var employee_type: EmployeeTypes.EmployeeType
 var state: State = State.IDLE
@@ -29,14 +35,47 @@ var main_scene : Node2D
 # SETUP
 # -----------------------
 func setup(_current_zone, _main_scene):
+	corruption_predisposition = randf_range(0, 0.1)
 	current_zone = _current_zone
 	main_scene = _main_scene
 	employee_type = current_zone.tier_type
 	global_position = Vector2(randf_range(20, 480), current_zone.default_position.y)
+	wage_expectancy = randf_range(0.5, 1.5)
+	walking_speed = randf_range(20, 30)
 	
+	base_working_speed = randf_range(0.9, 1.1)
+	calculate_stats()
 
 func _ready():
 	pass
+
+func get_average_payment_of_type():
+	match employee_type:
+		EmployeeTypes.EmployeeType.FARMER:
+			return Global.farmer_avg_paygrade
+		EmployeeTypes.EmployeeType.WORKER:
+			return Global.worker_avg_paygrade
+		EmployeeTypes.EmployeeType.MANAGER:
+			return Global.manager_avg_paygrade
+
+func get_current_payment():
+	match employee_type:
+		EmployeeTypes.EmployeeType.FARMER:
+			return Global.farmer_paygrade
+		EmployeeTypes.EmployeeType.WORKER:
+			return Global.worker_paygrade
+		EmployeeTypes.EmployeeType.MANAGER:
+			return Global.manager_paygrade
+
+
+func calculate_stats():
+	corruption += (corruption_predisposition + ((wage_expectancy * get_average_payment_of_type() - get_current_payment()) - (satisfaction/10)))/60
+	corruption = clampf(corruption, 0, 1) + (corruption_predisposition/10)
+	
+	satisfaction += (get_current_payment() - (wage_expectancy * get_average_payment_of_type()))/10
+	satisfaction = clampf(satisfaction, 0, 1)
+	
+	working_speed = (satisfaction + 0.5) * base_working_speed
 
 
 # -----------------------
@@ -52,6 +91,9 @@ func _physics_process(delta: float) -> void:
 	_update_animation()
 
 func _run_ai(delta: float) -> void:
+	if satisfaction <=0.01:
+		handle_no_satisfaction()
+	
 	match employee_type:
 		EmployeeTypes.EmployeeType.FARMER:
 			_farmer_ai(delta)
@@ -66,6 +108,7 @@ func _run_ai(delta: float) -> void:
 # -----------------------
 
 func _farmer_ai(delta: float) -> void:
+	animation_player.speed_scale = 1
 	match state:
 		State.IDLE:
 			velocity = Vector2.ZERO
@@ -81,6 +124,7 @@ func _farmer_ai(delta: float) -> void:
 			if not is_instance_valid(target_station):
 				_reset_to_idle()
 				return
+			animation_player.speed_scale = working_speed
 			global_position = target_station.global_position
 			target_station.work(delta, self)
 
@@ -127,6 +171,11 @@ func _reset_to_idle():
 	target_station = null
 	state = State.IDLE
 
+func handle_no_satisfaction():
+	main_scene.do_text_popup("employee resigned", global_position + Vector2(0, -10))
+	_reset_to_idle()
+	queue_free()
+
 # -----------------------
 # MOVEMENT
 # -----------------------
@@ -168,6 +217,7 @@ func _find_station() -> void:
 # DRAG SYSTEM
 # -----------------------
 func start_drag():
+	SoundManager.play_sound(RABBIT_PICKUP)
 	if DragManager.dragged_employee != null:
 		return
 	DragManager.dragged_employee = self
@@ -175,6 +225,7 @@ func start_drag():
 
 
 func stop_drag():
+	SoundManager.play_sound(RABBIT_DROP)
 	if DragManager.dragged_employee == self:
 		DragManager.dragged_employee = null
 	state = State.IDLE
@@ -199,8 +250,14 @@ func _handle_drag():
 # -----------------------
 func _apply_zone(zone: Area2D):
 	employee_type = zone.tier_type
+	var previous_zone_tier_type = current_zone.tier_type
 	current_zone = zone
 	global_position.y = zone.default_position.y
+	
+	if previous_zone_tier_type > current_zone.tier_type:
+		SoundManager.play_sound(RABBIT_DOWNGRADE)
+	if previous_zone_tier_type < current_zone.tier_type:
+		SoundManager.play_sound(RABBIT_UPGRADE)
 	_play_anim("idle")
 	_update_animation()
 
@@ -250,7 +307,7 @@ func _play_anim(name: String):
 	if current_animation == animation_name:
 		return
 	
-	current_animation = name
+	current_animation = animation_name
 	animation_player.play(animation_name)
 
 
@@ -277,4 +334,7 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 				stop_drag()
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			main_scene.employee_inspector_menu.show_properties(self)
-	
+
+
+func _on_stats_timer_timeout() -> void:
+	calculate_stats()

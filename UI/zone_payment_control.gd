@@ -1,0 +1,38 @@
+extends Control
+
+
+@export var tier : EmployeeTypes.EmployeeType
+
+func _ready() -> void:
+	display_text()
+
+func change_pay(amount : float) -> void:
+	match tier:
+		EmployeeTypes.EmployeeType.FARMER:
+			Global.farmer_paygrade = clampf(Global.farmer_paygrade + amount, 0, 100)
+		EmployeeTypes.EmployeeType.WORKER:
+			Global.worker_paygrade = clampf(Global.worker_paygrade + amount, 0, 100)
+		EmployeeTypes.EmployeeType.MANAGER:
+			Global.manager_paygrade = clampf(Global.manager_paygrade + amount, 0, 100)
+	display_text()
+
+func get_tier_pay():
+	match tier:
+		EmployeeTypes.EmployeeType.FARMER:
+			return Global.farmer_paygrade
+		EmployeeTypes.EmployeeType.WORKER:
+			return Global.worker_paygrade
+		EmployeeTypes.EmployeeType.MANAGER:
+			return Global.manager_paygrade
+
+
+func _on_button_up_pressed() -> void:
+	change_pay(0.01)
+
+
+func _on_button_down_pressed() -> void:
+	change_pay(-0.01)
+
+func display_text():
+	var text = " pay: " + str(get_tier_pay()) + "cc"
+	%MainLabel.text = text

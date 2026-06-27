@@ -1,14 +1,72 @@
 [gd_scene format=3 uid="uid://hwoe7g8vvhue"]
 
 [ext_resource type="Script" uid="uid://dljb7jsxuwrml" path="res://workstations/fabricator.gd" id="1_05krj"]
+[ext_resource type="Texture2D" uid="uid://cowbe2pdaaji7" path="res://workstations/wciskanie_konsoli_srednia.png" id="2_jpfij"]
+[ext_resource type="Theme" uid="uid://3b6jfloh1m1l" path="res://UI/black_and_white_theme/black_and_white.tres" id="2_ojlh0"]
+[ext_resource type="Texture2D" uid="uid://c6adh4ogxe4cw" path="res://workstations/maszyna_do_marchewek.png" id="3_428cm"]
+
+[sub_resource type="Animation" id="Animation_428cm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_jpfij"]
+resource_name = "press_button"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8iw0f"]
+_data = {
+&"RESET": SubResource("Animation_428cm"),
+&"press_button": SubResource("Animation_jpfij")
+}
 
 [node name="Fabricator" type="Node2D" unique_id=319888937]
 script = ExtResource("1_05krj")
-carrots_available = null
-carrot_timer = null
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1404198740]
+[node name="ButtonSprite" type="Sprite2D" parent="." unique_id=1404198740]
+z_index = 1
+position = Vector2(0, -8)
+texture = ExtResource("2_jpfij")
+hframes = 3
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1754536578]
-color = Color(0.2520276, 0.25202766, 0.25202763, 1)
-polygon = PackedVector2Array(-3, -3, 5, -5, 4, 5, -3, 6)
+[node name="FabricatorSprite" type="Sprite2D" parent="." unique_id=1403118564]
+position = Vector2(17, -8)
+texture = ExtResource("3_428cm")
+hframes = 10
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=769493120]
+z_index = 2
+offset_left = -3.0
+offset_top = -23.0
+offset_right = 23.0
+offset_bottom = -18.0
+theme = ExtResource("2_ojlh0")
+show_percentage = false
+
+[node name="FabricatorAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1273288324]
+libraries/ = SubResource("AnimationLibrary_8iw0f")
+
+[node name="ButtonAnimationPlayer" type="AnimationPlayer" parent="." unique_id=900589565]
+libraries/ = SubResource("AnimationLibrary_8iw0f")

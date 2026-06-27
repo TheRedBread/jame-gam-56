@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 DragManager="*uid://xn0xjp3wtwsy"
 Global="*uid://cxatsqof4g2u"
+SoundManager="*uid://bn2imp8a5smc0"
 
 [display]
 
@@ -32,6 +33,7 @@ window/stretch/aspect="expand"
 [global_group]
 
 employee_zone=""
+employee=""
 
 [physics]
 

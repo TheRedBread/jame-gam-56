@@ -28,7 +28,7 @@ position = Vector2(253, 148)
 script = ExtResource("1_w6cvi")
 station_type = ExtResource("4_bcr5l")
 tier_type = 1
-default_position = Vector2(256, 184)
+default_position = Vector2(256, 185)
 
 [node name="ZoneCollision" type="CollisionPolygon2D" parent="FactoryZone" unique_id=361255161]
 position = Vector2(-64, 80)

@@ -1,6 +1,8 @@
 extends Control
 
 @onready var selling_container: PanelContainer = $SellingContainer
+const BUTTON_PRESS = preload("res://sounds/button_press.wav")
+const CASH = preload("uid://dvl6r88b61egp")
 
 var is_hidden : bool = true
 
@@ -27,11 +29,16 @@ func find_child_of_type_and_substr(parent, type, substr):
 	return null
 
 func _on_caroot_sell_button_pressed() -> void:
+	if Global.carrots <=0:
+		SoundManager.action_fail()
+		return
+	SoundManager.play_sound(CASH)
 	Global.carrots_currency += Global.carrots
 	Global.carrots = 0
 
 
 func _on_show_sell_button_pressed() -> void:
+	SoundManager.play_sound(BUTTON_PRESS)
 	if is_hidden == true:
 		selling_container.show()
 		is_hidden = false
@@ -41,10 +48,18 @@ func _on_show_sell_button_pressed() -> void:
 
 
 func _on_carrot_send_to_process_button_pressed() -> void:
+	if Global.carrots <=0:
+		SoundManager.action_fail()
+		return
+	SoundManager.play_sound(BUTTON_PRESS)
 	Global.carrots_in_process += Global.carrots
 	Global.carrots = 0
 
 
 func _on_processed_carrot_sell_button_pressed() -> void:
+	if Global.processed_carrots <=0:
+		SoundManager.action_fail()
+		return
+	SoundManager.play_sound(CASH)
 	Global.carrots_currency += Global.processed_carrots * Global.processed_carrots_value
 	Global.processed_carrots = 0

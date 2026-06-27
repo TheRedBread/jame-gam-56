@@ -1,7 +1,10 @@
 extends Node2D
 
 const employee := preload("res://Employee/employee.tscn")
+const CASH = preload("res://sounds/cash.wav")
 @onready var employee_inspector_menu: Control = %EmployeeInspectorMenu
+const POPUP_TEXT = preload("res://UI/popup_text.tscn")
+const BLACK_AND_WHITE = preload("res://UI/black_and_white_theme/black_and_white.tres")
 
 var employee_list : Array
 
@@ -13,14 +16,64 @@ func spawn_new_employee() -> void:
 	new_employee.setup(get_current_pyramid().find_child("FarmZone"), self)
 	add_child(new_employee)
 
+func do_popup(child_node : Node, pos : Vector2):
+	var popup = POPUP_TEXT.instantiate()
+	popup.find_child("AnimationContainer").add_child(child_node)
+	add_child(popup)
+	popup.position = pos
+
+func do_text_popup(text : String, pos : Vector2):
+	var label = Label.new()
+	label.text = text
+	label.theme = BLACK_AND_WHITE
+	do_popup(label, pos)
+
+
 func _ready() -> void:
 	spawn_new_employee()
 
 func _on_button_pressed() -> void:
 	if Global.carrots_currency >= Global.employee_price:
-		Global.carrots_currency -= 1
+		SoundManager.play_sound(CASH)
+		Global.carrots_currency -= Global.employee_price
 		spawn_new_employee()
+	else:
+		SoundManager.action_fail()
 
 func _process(delta: float) -> void:
 	$CarrotCounter.text = "CarrotCoins (cc): " + str(Global.carrots_currency) 
 	$Button.text = "Hire " + str(Global.employee_price) + "cc"
+
+func get_employees() -> Array:
+	return get_tree().get_nodes_in_group("employee")
+
+func get_employees_with_tier_type(type : EmployeeTypes.EmployeeType) -> Array:
+	var employee_array : Array
+	for employee : Employee in get_employees():
+		if employee.employee_type == type:
+			employee_array.append(employee)
+	return employee_array
+
+func _pay(amount : float) -> bool:
+	if amount > Global.carrots_currency:
+		return false
+	Global.carrots_currency -= amount
+	return true
+	
+
+func _pay_employees():
+	var farmers_count = get_employees_with_tier_type(EmployeeTypes.EmployeeType.FARMER).size()
+	var workers_count = get_employees_with_tier_type(EmployeeTypes.EmployeeType.WORKER).size()
+	var managers_count = get_employees_with_tier_type(EmployeeTypes.EmployeeType.MANAGER).size()
+	var payment = farmers_count*Global.farmer_paygrade + workers_count*Global.worker_paygrade + managers_count*Global.manager_paygrade
+	
+	if (!_pay(payment)):
+		Global.farmer_paygrade = 0
+		Global.worker_paygrade = 0
+		Global.manager_paygrade = 0
+		do_text_popup("You didn't pay employees", Vector2(95, 15))
+	do_text_popup("Payed Employees: " + str(payment), Vector2(95, 15))
+	
+
+func _on_pay_timer_timeout() -> void:
+	_pay_employees()

@@ -36,4 +36,9 @@ autowrap_mode = 0
 layout_mode = 2
 text = "close"
 
+[node name="UpdateEmployeeTimer" type="Timer" parent="." unique_id=581103054]
+unique_name_in_owner = true
+wait_time = 2.0
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="timeout" from="UpdateEmployeeTimer" to="." method="_on_update_employee_timer_timeout"]

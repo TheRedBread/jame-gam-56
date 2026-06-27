@@ -6,6 +6,8 @@ var stations: Array[WorkStation] = []
 @export var tier_type : EmployeeTypes.EmployeeType
 @export var default_position : Vector2
 
+var boost_scale : float = 1
+
 @export var carrot_spawn_timer_reset_time : float = 100
 var carrot_spawn_timer : float = carrot_spawn_timer_reset_time
 
@@ -29,7 +31,12 @@ func _ready() -> void:
 		spawn_station(default_position)
 
 func _handle_carrot_spawning(delta):
-	carrot_spawn_timer -= Global.carrot_spawn_rate*delta*60
+	if $"../../Booster".is_boosted:
+		boost_scale = 5
+	else:
+		boost_scale = 1
+	
+	carrot_spawn_timer -= Global.carrot_spawn_rate*delta*60*boost_scale
 	if carrot_spawn_timer <= 0 and Global.carrots_on_ground < 30:
 		spawn_carrot()
 		carrot_spawn_timer = carrot_spawn_timer_reset_time

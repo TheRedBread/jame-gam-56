@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://bbt5ykuseuxky"]
+
+[ext_resource type="Texture2D" uid="uid://qmw7lfwwfv6s" path="res://workstations/mielarka_krolikow.png" id="1_l4hag"]
+[ext_resource type="Script" uid="uid://7aooyfkvjdi6" path="res://workstations/human_saw.gd" id="1_stbc4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12j5o"]
+size = Vector2(114, 60)
+
+[sub_resource type="Animation" id="Animation_stbc4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MillParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yrb6b"]
+resource_name = "mill"
+length = 1.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MillParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.90000004, 1, 1.1, 1.2, 1.3000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_etcoh"]
+_data = {
+&"RESET": SubResource("Animation_stbc4"),
+&"mill": SubResource("Animation_yrb6b")
+}
+
+[sub_resource type="Gradient" id="Gradient_12j5o"]
+offsets = PackedFloat32Array(0.15486726, 1)
+colors = PackedColorArray(0.62557477, 2.623126e-06, 1.2032688e-06, 1, 0.65882355, 0, 0, 0.4745098)
+
+[node name="HumanSaw" type="Area2D" unique_id=217329882 groups=["employee_zone"]]
+script = ExtResource("1_stbc4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1338346023]
+shape = SubResource("RectangleShape2D_12j5o")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2103022808]
+texture = ExtResource("1_l4hag")
+hframes = 14
+
+[node name="MillAnimationPlayer" type="AnimationPlayer" parent="." unique_id=426335168]
+libraries/ = SubResource("AnimationLibrary_etcoh")
+
+[node name="MillParticles" type="CPUParticles2D" parent="." unique_id=1583427085]
+emitting = false
+amount = 162
+one_shot = true
+explosiveness = 0.63
+randomness = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(20.96, 2.35)
+spread = 180.0
+gravity = Vector2(0, 10)
+initial_velocity_min = 66.05
+initial_velocity_max = 130.7
+angular_velocity_min = -25.1
+angular_velocity_max = 3.65
+linear_accel_min = -3.96
+radial_accel_min = -15.84
+radial_accel_max = 9.9
+tangential_accel_min = -5.35
+tangential_accel_max = 7.0
+damping_min = 4.51
+damping_max = 13.581
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color_ramp = SubResource("Gradient_12j5o")

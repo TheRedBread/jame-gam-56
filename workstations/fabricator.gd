@@ -28,10 +28,10 @@ func handle_animation():
 	if !fabricator_animation_player.is_playing():
 		$FabricatorAnimationPlayer.play("process_carrots")
 	if !button_animation_player.is_playing():
-		$FabricatorAnimationPlayer.play("press_button")
+		$ButtonAnimationPlayer.play("press_button")
 
 func work(delta, employee):
-	progress -= ((employee.working_speed)*delta*60)/50
+	progress -= ((employee.working_speed)*delta*60)/4
 	$ProgressBar.value = init_progress - progress
 	if (progress <= 0):
 		finish_work()

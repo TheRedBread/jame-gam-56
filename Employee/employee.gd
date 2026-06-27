@@ -225,6 +225,8 @@ func start_drag():
 
 
 func stop_drag():
+	
+	
 	SoundManager.play_sound(RABBIT_DROP)
 	if DragManager.dragged_employee == self:
 		DragManager.dragged_employee = null
@@ -232,7 +234,11 @@ func stop_drag():
 	
 	var zone = _get_zone_under_mouse()
 	if zone:
-		_apply_zone(zone)
+		if "HumanSaw" in zone.name:
+			zone.mill()
+			queue_free()
+		else:
+			_apply_zone(zone)
 	else:
 		global_position = current_zone.default_position
 	target_station = null
@@ -254,9 +260,12 @@ func _apply_zone(zone: Area2D):
 	current_zone = zone
 	global_position.y = zone.default_position.y
 	
+	var satisfaction_scale_amount = abs(previous_zone_tier_type - current_zone.tier_type)
 	if previous_zone_tier_type > current_zone.tier_type:
+		satisfaction = clampf(satisfaction - 0.1 * satisfaction_scale_amount, 0, 1)
 		SoundManager.play_sound(RABBIT_DOWNGRADE)
 	if previous_zone_tier_type < current_zone.tier_type:
+		satisfaction = clampf(satisfaction + 0.1 * satisfaction_scale_amount, 0, 1)
 		SoundManager.play_sound(RABBIT_UPGRADE)
 	_play_anim("idle")
 	_update_animation()

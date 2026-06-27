@@ -5,7 +5,10 @@ const CASH = preload("res://sounds/cash.wav")
 @onready var employee_inspector_menu: Control = %EmployeeInspectorMenu
 const POPUP_TEXT = preload("res://UI/popup_text.tscn")
 const BLACK_AND_WHITE = preload("res://UI/black_and_white_theme/black_and_white.tres")
-
+@onready var camera_2d: Camera2D = $Camera2D
+@onready var camera_start_position := camera_2d.position
+const CAMERA_SCROLL_MARGIN := 20 
+const CAMERA_SCROLL_SPEED := 400.0
 var employee_list : Array
 
 func get_current_pyramid():
@@ -43,6 +46,8 @@ func _on_button_pressed() -> void:
 func _process(delta: float) -> void:
 	$CarrotCounter.text = "CarrotCoins (cc): " + str(Global.carrots_currency) 
 	$Button.text = "Hire " + str(Global.employee_price) + "cc"
+	
+	handle_camera(delta)
 
 func get_employees() -> Array:
 	return get_tree().get_nodes_in_group("employee")
@@ -77,3 +82,23 @@ func _pay_employees():
 
 func _on_pay_timer_timeout() -> void:
 	_pay_employees()
+
+func handle_camera(delta):
+	if %MillTimer.time_left > 0:
+		return
+	
+	var target_y : float = camera_2d.position.y
+	if DragManager.dragged_employee != null:
+		var screen_pos = get_global_mouse_position()
+		if screen_pos.y > get_viewport_rect().size.y - CAMERA_SCROLL_MARGIN:
+			target_y = 50.0
+		else:
+			target_y = camera_start_position.y
+	else:
+		target_y = camera_start_position.y
+	camera_2d.position.y = lerp(camera_2d.position.y, target_y, 0.15)
+
+func _on_human_saw_milled() -> void:
+	%MillTimer.start()
+	for employee in get_employees():
+		employee.satisfaction -= 0.1

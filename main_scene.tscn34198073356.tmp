@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cgv5cvmndh1mh" path="res://UI/employee_inspector_menu.tscn" id="5_8mm7a"]
 [ext_resource type="PackedScene" uid="uid://cefmbpcrmd7nt" path="res://UI/zone_payment_control.tscn" id="6_hq1ik"]
 [ext_resource type="PackedScene" uid="uid://bbt5ykuseuxky" path="res://workstations/human_saw.tscn" id="7_nfk4m"]
-[ext_resource type="Script" uid="uid://dwk0t13belu5p" path="res://booster.gd" id="8_66tet"]
 
 [node name="MainScene" type="Node2D" unique_id=235254048]
 script = ExtResource("1_0f027")
@@ -80,32 +79,6 @@ position = Vector2(254, 318)
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1492846958]
 anchor_mode = 0
 
-[node name="MillTimer" type="Timer" parent="Camera2D" unique_id=661139610]
-unique_name_in_owner = true
-wait_time = 0.5
-one_shot = true
-
-[node name="Booster" type="Node2D" parent="." unique_id=61670184]
-position = Vector2(420, 267)
-script = ExtResource("8_66tet")
-
-[node name="Timer" type="Timer" parent="Booster" unique_id=741003710]
-wait_time = 25.0
-one_shot = true
-
-[node name="ProgressBar" type="ProgressBar" parent="Booster" unique_id=564463101]
-offset_left = 67.0
-offset_top = -71.0
-offset_right = 79.0
-offset_bottom = 14.0
-theme = ExtResource("2_d5x1h")
-max_value = 1.0
-step = 0.001
-fill_mode = 3
-show_percentage = false
-
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="PayTimer" to="." method="_on_pay_timer_timeout"]
 [connection signal="milled" from="HumanSaw" to="." method="_on_human_saw_milled"]
-[connection signal="milled" from="HumanSaw" to="Booster" method="_on_human_saw_milled"]
-[connection signal="timeout" from="Booster/Timer" to="Booster" method="_on_timer_timeout"]

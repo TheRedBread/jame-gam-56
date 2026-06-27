@@ -1,6 +1,7 @@
 extends Node2D
 
 const employee := preload("res://Employee/employee.tscn")
+@onready var employee_inspector_menu: Control = %EmployeeInspectorMenu
 
 var employee_list : Array
 
@@ -9,7 +10,7 @@ func get_current_pyramid():
 
 func spawn_new_employee() -> void:
 	var new_employee = employee.instantiate()
-	new_employee.setup(get_current_pyramid().find_child("FarmZone"))
+	new_employee.setup(get_current_pyramid().find_child("FarmZone"), self)
 	add_child(new_employee)
 
 func _ready() -> void:

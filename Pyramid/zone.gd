@@ -30,7 +30,7 @@ func _ready() -> void:
 
 func _handle_carrot_spawning(delta):
 	carrot_spawn_timer -= Global.carrot_spawn_rate*delta*60
-	if carrot_spawn_timer <= 0:
+	if carrot_spawn_timer <= 0 and Global.carrots_on_ground < 30:
 		spawn_carrot()
 		carrot_spawn_timer = carrot_spawn_timer_reset_time
 

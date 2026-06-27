@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cx1vt6kltnyfo" path="res://Pyramid/pyramid.tscn" id="2_2c62f"]
 [ext_resource type="Theme" uid="uid://3b6jfloh1m1l" path="res://UI/black_and_white_theme/black_and_white.tres" id="2_d5x1h"]
 [ext_resource type="PackedScene" uid="uid://ytctmgrnepmk" path="res://UI/selling_interface.tscn" id="3_gyfs4"]
+[ext_resource type="PackedScene" uid="uid://cgv5cvmndh1mh" path="res://UI/employee_inspector_menu.tscn" id="5_8mm7a"]
 
 [node name="MainScene" type="Node2D" unique_id=235254048]
 script = ExtResource("1_0f027")
@@ -19,9 +20,9 @@ text = "new employee"
 [node name="Pyramid" parent="." unique_id=491428056 instance=ExtResource("2_2c62f")]
 
 [node name="CarrotCounter" type="Label" parent="." unique_id=493232259]
-offset_left = 11.0
+offset_left = 10.0
 offset_top = 11.0
-offset_right = 77.0
+offset_right = 76.0
 offset_bottom = 34.0
 theme = ExtResource("2_d5x1h")
 text = "Carrots: "
@@ -30,9 +31,16 @@ text = "Carrots: "
 position = Vector2(480, 275)
 
 [node name="SellingInterface" parent="." unique_id=563713991 instance=ExtResource("3_gyfs4")]
-offset_left = 55.0
-offset_top = 43.0
-offset_right = 55.0
-offset_bottom = 43.0
+offset_left = 6.0
+offset_top = 41.0
+offset_right = 6.0
+offset_bottom = 41.0
+
+[node name="EmployeeInspectorMenu" parent="." unique_id=980859345 instance=ExtResource("5_8mm7a")]
+unique_name_in_owner = true
+offset_left = 388.0
+offset_top = 53.0
+offset_right = 388.0
+offset_bottom = 53.0
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

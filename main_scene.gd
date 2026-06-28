@@ -9,6 +9,9 @@ const BLACK_AND_WHITE = preload("res://UI/black_and_white_theme/black_and_white.
 @onready var camera_start_position := camera_2d.position
 const CAMERA_SCROLL_MARGIN := 7 
 const CAMERA_SCROLL_SPEED := 400.0
+const CASH_FAIL = preload("res://sounds/cash_fail.wav")
+
+
 var employee_list : Array
 @onready var fabricated_counter: Label = %FabricatedCounter
 
@@ -115,7 +118,9 @@ func _on_human_saw_milled() -> void:
 
 func _on_fertilize_button_pressed() -> void:
 	if Global.get_fertilize_price() > Global.carrots_currency:
+		SoundManager.play_sound(CASH_FAIL)
 		Global.do_text_popup("not enough cc", get_global_mouse_position(), self,  Color.from_rgba8(241, 167, 122))
 		return
 	Global.increase_carrot_spawn_rate()
+	SoundManager.play_sound(CASH)
 	Global.carrots_currency -= Global.get_fertilize_price()

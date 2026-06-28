@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var pyramid: Node2D = $"../Pyramid"
 var is_hidden : bool = true
+const BUTTON_PRESS = preload("res://sounds/button_press.wav")
 
 func _ready() -> void:
 	%ShopPanel.hide()
@@ -23,6 +24,7 @@ func _on_equipment_shopping_worker_buy_equipment(type: Variant, place: Variant) 
 
 
 func _on_show_button_pressed() -> void:
+	SoundManager.play_sound(BUTTON_PRESS)
 	if is_hidden:
 		is_hidden = false
 		%ShopPanel.show()

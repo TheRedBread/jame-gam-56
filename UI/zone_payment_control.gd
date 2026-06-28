@@ -2,6 +2,7 @@ extends Control
 
 
 @export var tier : EmployeeTypes.EmployeeType
+const BUTTON_PRESS = preload("res://sounds/button_press.wav")
 
 func _ready() -> void:
 	display_text()
@@ -27,6 +28,7 @@ func get_tier_pay():
 
 
 func _on_button_up_pressed() -> void:
+	SoundManager.play_sound(BUTTON_PRESS)
 	change_pay(0.05)
 
 

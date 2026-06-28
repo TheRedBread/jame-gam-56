@@ -27,12 +27,12 @@ func get_tier_pay():
 
 
 func _on_button_up_pressed() -> void:
-	change_pay(0.01)
+	change_pay(0.05)
 
 
 func _on_button_down_pressed() -> void:
-	change_pay(-0.01)
+	change_pay(-0.05)
 
 func display_text():
-	var text = " pay: " + str(get_tier_pay())
+	var text = " pay: " + str(snappedf(get_tier_pay(), 0.05))
 	%MainLabel.text = text

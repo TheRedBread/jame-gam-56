@@ -8,16 +8,18 @@ var is_hidden : bool = true
 
 func _ready() -> void:
 	selling_container.hide()
+	update_shop_items()
 
 func update_shop_item(item : HBoxContainer, amount : int, value : float, item_name : String):
-	find_child_of_type_and_substr(item, Button, "Sell").text = "Sell " + str(float(amount) * value)
+	find_child_of_type_and_substr(item, Button, "Sell").text = "Sell " + str(snappedf(amount * value, 0.5))
 	find_child_of_type_and_substr(item, Label, "Label").text = str(amount) + " " + item_name
 
-
 func _process(delta: float) -> void:
+	update_shop_items()
+
+func update_shop_items():
 	update_shop_item(%CarrotsSell, Global.carrots, 1, "Carrots")
 	update_shop_item(%ProcessedCarrotsSell, Global.processed_carrots, Global.processed_carrots_value, "Processed Carrots")
-
 
 func find_child_of_type_and_substr(parent, type, substr):
 	for child in parent.get_children():
@@ -35,6 +37,8 @@ func _on_caroot_sell_button_pressed() -> void:
 	SoundManager.play_sound(CASH)
 	Global.carrots_currency += Global.carrots
 	Global.carrots = 0
+	update_shop_items()
+	
 
 
 func _on_show_sell_button_pressed() -> void:
@@ -45,6 +49,7 @@ func _on_show_sell_button_pressed() -> void:
 	else:
 		selling_container.hide()
 		is_hidden = true
+	update_shop_items()
 
 
 func _on_carrot_send_to_process_button_pressed() -> void:
@@ -54,6 +59,7 @@ func _on_carrot_send_to_process_button_pressed() -> void:
 	SoundManager.play_sound(BUTTON_PRESS)
 	Global.carrots_in_process += Global.carrots
 	Global.carrots = 0
+	update_shop_items()
 
 
 func _on_processed_carrot_sell_button_pressed() -> void:
@@ -63,3 +69,4 @@ func _on_processed_carrot_sell_button_pressed() -> void:
 	SoundManager.play_sound(CASH)
 	Global.carrots_currency += Global.processed_carrots * Global.processed_carrots_value
 	Global.processed_carrots = 0
+	update_shop_items()

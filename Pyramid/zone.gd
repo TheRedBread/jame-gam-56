@@ -26,7 +26,8 @@ func spawn_carrot():
 	spawn_station(Vector2(randf_range(20, 480), default_position.y))
 
 func _ready() -> void:
-	pass
+	if tier_type == EmployeeTypes.EmployeeType.FARMER:
+		spawn_carrot()
 
 func _handle_carrot_spawning(delta):
 	if $"../../Booster".is_boosted:
@@ -35,7 +36,7 @@ func _handle_carrot_spawning(delta):
 		boost_scale = 1
 	
 	carrot_spawn_timer -= Global.carrot_spawn_rate*delta*60*boost_scale
-	if carrot_spawn_timer <= 0 and Global.carrots_on_ground < 30:
+	if carrot_spawn_timer <= 0 and Global.carrots_on_ground < 60:
 		spawn_carrot()
 		carrot_spawn_timer = carrot_spawn_timer_reset_time
 

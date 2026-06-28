@@ -7,7 +7,7 @@ const POPUP_TEXT = preload("res://UI/popup_text.tscn")
 const BLACK_AND_WHITE = preload("res://UI/black_and_white_theme/black_and_white.tres")
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var camera_start_position := camera_2d.position
-const CAMERA_SCROLL_MARGIN := 20 
+const CAMERA_SCROLL_MARGIN := 7 
 const CAMERA_SCROLL_SPEED := 400.0
 var employee_list : Array
 
@@ -32,9 +32,9 @@ func _on_button_pressed() -> void:
 		SoundManager.action_fail()
 
 func _process(delta: float) -> void:
-	%CarrotCounter.text = "CarrotCoins (cc): " + str(Global.carrots_currency) 
+	%CarrotCounter.text = "CarrotCoins (cc): " + str(snappedf(Global.carrots_currency, 0.01)) 
 	$NewEmployeeButton.text = "Hire " + str(Global.employee_price) + "cc"
-	
+	$FertilizeButton.text = "fertilze: " + str(Global.get_fertilize_price())
 	handle_camera(delta)
 
 func get_employees() -> Array:
@@ -79,12 +79,9 @@ func handle_camera(delta):
 		return
 	
 	var target_y : float = camera_2d.position.y
-	if DragManager.dragged_employee != null:
-		var screen_pos = get_global_mouse_position()
-		if screen_pos.y > get_viewport_rect().size.y - CAMERA_SCROLL_MARGIN:
-			target_y = 50.0
-		else:
-			target_y = camera_start_position.y
+	var screen_pos = get_global_mouse_position()
+	if screen_pos.y > get_viewport_rect().size.y - CAMERA_SCROLL_MARGIN:
+		target_y = 50.0
 	else:
 		target_y = camera_start_position.y
 	camera_2d.position.y = lerp(camera_2d.position.y, target_y, 0.15)
@@ -93,3 +90,11 @@ func _on_human_saw_milled() -> void:
 	%MillTimer.start()
 	for employee in get_employees():
 		employee.satisfaction -= 0.1
+
+
+func _on_fertilize_button_pressed() -> void:
+	if Global.get_fertilize_price() > Global.carrots_currency:
+		Global.do_text_popup("not enough cc", get_global_mouse_position(), self,  Color.from_rgba8(241, 167, 122))
+		return
+	Global.increase_carrot_spawn_rate()
+	Global.carrots_currency -= Global.get_fertilize_price()

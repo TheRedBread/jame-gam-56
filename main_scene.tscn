@@ -116,8 +116,20 @@ show_percentage = false
 [node name="EquipmentShop" parent="." unique_id=1350957442 instance=ExtResource("9_7ycvg")]
 position = Vector2(8, 122)
 
+[node name="FertilizeButton" type="Button" parent="." unique_id=2131669031]
+offset_left = 24.0
+offset_top = 310.0
+offset_right = 97.0
+offset_bottom = 329.0
+theme = ExtResource("2_d5x1h")
+text = "fertilize: "
+icon = ExtResource("4_wr18j")
+alignment = 0
+icon_alignment = 2
+
 [connection signal="pressed" from="NewEmployeeButton" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="PayTimer" to="." method="_on_pay_timer_timeout"]
 [connection signal="milled" from="HumanSaw" to="." method="_on_human_saw_milled"]
 [connection signal="milled" from="HumanSaw" to="Booster" method="_on_human_saw_milled"]
 [connection signal="timeout" from="Booster/Timer" to="Booster" method="_on_timer_timeout"]
+[connection signal="pressed" from="FertilizeButton" to="." method="_on_fertilize_button_pressed"]

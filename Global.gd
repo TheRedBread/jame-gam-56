@@ -20,6 +20,12 @@ var farmer_paygrade : float = farmer_avg_paygrade
 var worker_paygrade : float = worker_avg_paygrade
 var manager_paygrade : float = manager_avg_paygrade
 
+func increase_carrot_spawn_rate():
+	carrot_spawn_rate += 0.02
+
+func get_fertilize_price():
+	return snappedf( 8 + (carrot_spawn_rate*(carrot_spawn_rate/10) * 500), 0.01)
+
 func do_popup(child_node : Node, pos : Vector2, requester : Variant):
 	var popup = POPUP_TEXT.instantiate()
 	popup.find_child("AnimationContainer").add_child(child_node)
@@ -34,3 +40,9 @@ func do_text_popup(text : String, pos : Vector2, requester : Variant, color : Co
 	label.horizontal_alignment =HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	do_popup(label, pos, requester)
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			DragManager.dragged_employee = null

@@ -64,6 +64,7 @@ _data = {
 }
 
 [node name="PopupText" type="Node2D" unique_id=1433682151]
+z_index = 1
 script = ExtResource("1_d7uui")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2027481717]

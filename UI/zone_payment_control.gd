@@ -34,5 +34,5 @@ func _on_button_down_pressed() -> void:
 	change_pay(-0.01)
 
 func display_text():
-	var text = " pay: " + str(get_tier_pay()) + "cc"
+	var text = " pay: " + str(get_tier_pay())
 	%MainLabel.text = text

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dtugci1pwcgnd"]
+
+[ext_resource type="Script" uid="uid://kv7xay3n2c55" path="res://equipment_shopping.gd" id="1_i7yb8"]
+[ext_resource type="Texture2D" uid="uid://duhkvnujukeh8" path="res://workstations/maszynka-marchewek-single.png" id="2_hftrg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_12j5o"]
+radius = 12.0415945
+
+[node name="EquipmentShopping" type="Area2D" unique_id=1982843623]
+collision_mask = 0
+script = ExtResource("1_i7yb8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=637938446]
+texture = ExtResource("2_hftrg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=848237694]
+shape = SubResource("CircleShape2D_12j5o")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

@@ -10,7 +10,7 @@ func _ready() -> void:
 	selling_container.hide()
 
 func update_shop_item(item : HBoxContainer, amount : int, value : float, item_name : String):
-	find_child_of_type_and_substr(item, Button, "Sell").text = "Sell " + str(float(amount) * value) + "cc"
+	find_child_of_type_and_substr(item, Button, "Sell").text = "Sell " + str(float(amount) * value)
 	find_child_of_type_and_substr(item, Label, "Label").text = str(amount) + " " + item_name
 
 

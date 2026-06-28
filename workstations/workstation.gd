@@ -1,7 +1,7 @@
 extends Node2D
 class_name WorkStation
 
-var reserved_by: CharacterBody2D = null
+var reserved_by: Employee = null
 var has_work_to_do : bool = true
 
 func is_available() -> bool:

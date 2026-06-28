@@ -18,17 +18,15 @@ func spawn_station(pos: Vector2):
 	
 	var s = station_type.instantiate()
 	add_child(s)
-	s.global_position = pos
+	s.global_position.x = pos.x
+	s.global_position.y = default_position.y
 	stations.append(s)
 
 func spawn_carrot():
 	spawn_station(Vector2(randf_range(20, 480), default_position.y))
 
 func _ready() -> void:
-	if tier_type == EmployeeTypes.EmployeeType.FARMER:
-		spawn_carrot()
-	else:
-		spawn_station(default_position)
+	pass
 
 func _handle_carrot_spawning(delta):
 	if $"../../Booster".is_boosted:

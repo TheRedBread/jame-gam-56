@@ -95,9 +95,9 @@ hframes = 10
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=769493120]
 z_index = 2
-offset_left = -3.0
-offset_top = -23.0
-offset_right = 23.0
+offset_left = 4.0
+offset_top = -22.0
+offset_right = 19.0
 offset_bottom = -18.0
 theme = ExtResource("2_ojlh0")
 show_percentage = false

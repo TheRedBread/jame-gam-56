@@ -19,18 +19,6 @@ func spawn_new_employee() -> void:
 	new_employee.setup(get_current_pyramid().find_child("FarmZone"), self)
 	add_child(new_employee)
 
-func do_popup(child_node : Node, pos : Vector2):
-	var popup = POPUP_TEXT.instantiate()
-	popup.find_child("AnimationContainer").add_child(child_node)
-	add_child(popup)
-	popup.position = pos
-
-func do_text_popup(text : String, pos : Vector2):
-	var label = Label.new()
-	label.text = text
-	label.theme = BLACK_AND_WHITE
-	do_popup(label, pos)
-
 
 func _ready() -> void:
 	spawn_new_employee()
@@ -44,8 +32,8 @@ func _on_button_pressed() -> void:
 		SoundManager.action_fail()
 
 func _process(delta: float) -> void:
-	$CarrotCounter.text = "CarrotCoins (cc): " + str(Global.carrots_currency) 
-	$Button.text = "Hire " + str(Global.employee_price) + "cc"
+	%CarrotCounter.text = "CarrotCoins (cc): " + str(Global.carrots_currency) 
+	$NewEmployeeButton.text = "Hire " + str(Global.employee_price) + "cc"
 	
 	handle_camera(delta)
 
@@ -76,8 +64,11 @@ func _pay_employees():
 		Global.farmer_paygrade = 0
 		Global.worker_paygrade = 0
 		Global.manager_paygrade = 0
-		do_text_popup("You didn't pay employees", Vector2(95, 15))
-	do_text_popup("Payed Employees: " + str(payment), Vector2(95, 15))
+		$ManagementZonePaymentControl.display_text()
+		$WorkerZonePaymentControl.display_text()
+		$FarmerZonePaymentControl.display_text()
+		Global.do_text_popup("You didn't pay employees", Vector2(115, 15), self, Color.from_rgba8(241, 167, 122))
+	Global.do_text_popup("Payed Employees: " + str(payment), Vector2(115, 15), self, Color.from_rgba8(241, 167, 122))
 	
 
 func _on_pay_timer_timeout() -> void:

@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://cx1vt6kltnyfo"]
 
 [ext_resource type="Texture2D" uid="uid://r0ddvs6n7cs5" path="res://Pyramid/marchewabaza.png" id="1_1ho82"]
+[ext_resource type="Script" uid="uid://b52ug0rmlo8g1" path="res://Pyramid/pyramid.gd" id="1_r2s3m"]
 [ext_resource type="Script" uid="uid://bcoqjhayn2fjf" path="res://Pyramid/zone.gd" id="1_w6cvi"]
 [ext_resource type="PackedScene" uid="uid://cy67je4ukchlx" path="res://workstations/carrot.tscn" id="3_ngofd"]
 [ext_resource type="PackedScene" uid="uid://c2a3ouqh3epx" path="res://workstations/computer.tscn" id="3_ublmr"]
 [ext_resource type="PackedScene" uid="uid://hwoe7g8vvhue" path="res://workstations/fabricator.tscn" id="4_bcr5l"]
 
 [node name="Pyramid" type="Node2D" unique_id=491428056]
+script = ExtResource("1_r2s3m")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=181575074]
 texture = ExtResource("1_1ho82")

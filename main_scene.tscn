@@ -4,35 +4,44 @@
 [ext_resource type="PackedScene" uid="uid://cx1vt6kltnyfo" path="res://Pyramid/pyramid.tscn" id="2_2c62f"]
 [ext_resource type="Theme" uid="uid://3b6jfloh1m1l" path="res://UI/black_and_white_theme/black_and_white.tres" id="2_d5x1h"]
 [ext_resource type="PackedScene" uid="uid://ytctmgrnepmk" path="res://UI/selling_interface.tscn" id="3_gyfs4"]
+[ext_resource type="Texture2D" uid="uid://d3hla0gpaq4rd" path="res://workstations/moneta.png" id="4_wr18j"]
 [ext_resource type="PackedScene" uid="uid://cgv5cvmndh1mh" path="res://UI/employee_inspector_menu.tscn" id="5_8mm7a"]
 [ext_resource type="PackedScene" uid="uid://cefmbpcrmd7nt" path="res://UI/zone_payment_control.tscn" id="6_hq1ik"]
 [ext_resource type="PackedScene" uid="uid://bbt5ykuseuxky" path="res://workstations/human_saw.tscn" id="7_nfk4m"]
 [ext_resource type="Script" uid="uid://dwk0t13belu5p" path="res://booster.gd" id="8_66tet"]
+[ext_resource type="PackedScene" uid="uid://cgeteahn776a8" path="res://equipment_shop.tscn" id="9_7ycvg"]
 
 [node name="MainScene" type="Node2D" unique_id=235254048]
 script = ExtResource("1_0f027")
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1210727374]
-color = Color(0.30916053, 0.082272656, 0, 1)
-polygon = PackedVector2Array(-11, -9, 523, -10, 531, 415, -13, 419, -8, 250)
-
-[node name="Button" type="Button" parent="." unique_id=399880628]
+[node name="NewEmployeeButton" type="Button" parent="." unique_id=399880628]
 offset_left = 384.0
 offset_top = 14.0
 offset_right = 505.0
 offset_bottom = 45.0
 theme = ExtResource("2_d5x1h")
 text = "new employee"
+icon = ExtResource("4_wr18j")
+icon_alignment = 2
 
 [node name="Pyramid" parent="." unique_id=491428056 instance=ExtResource("2_2c62f")]
 
-[node name="CarrotCounter" type="Label" parent="." unique_id=493232259]
-offset_left = 10.0
-offset_top = 11.0
-offset_right = 76.0
-offset_bottom = 34.0
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=59252772]
+offset_left = 11.0
+offset_top = -1.0
+offset_right = 56.0
+offset_bottom = 39.0
+
+[node name="CarrotCounter" type="Label" parent="HBoxContainer" unique_id=493232259]
+unique_name_in_owner = true
+layout_mode = 2
 theme = ExtResource("2_d5x1h")
 text = "Carrots: "
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=1014581826]
+layout_mode = 2
+texture = ExtResource("4_wr18j")
+stretch_mode = 3
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1593547567]
 position = Vector2(85, 15)
@@ -45,13 +54,13 @@ offset_bottom = 41.0
 
 [node name="EmployeeInspectorMenu" parent="." unique_id=980859345 instance=ExtResource("5_8mm7a")]
 unique_name_in_owner = true
-offset_left = 388.0
+offset_left = 384.0
 offset_top = 53.0
-offset_right = 388.0
+offset_right = 384.0
 offset_bottom = 53.0
 
 [node name="PayTimer" type="Timer" parent="." unique_id=876920793]
-wait_time = 10.0
+wait_time = 25.0
 autostart = true
 
 [node name="ManagementZonePaymentControl" parent="." unique_id=1403004200 instance=ExtResource("6_hq1ik")]
@@ -104,7 +113,10 @@ step = 0.001
 fill_mode = 3
 show_percentage = false
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="EquipmentShop" parent="." unique_id=1350957442 instance=ExtResource("9_7ycvg")]
+position = Vector2(8, 122)
+
+[connection signal="pressed" from="NewEmployeeButton" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="PayTimer" to="." method="_on_pay_timer_timeout"]
 [connection signal="milled" from="HumanSaw" to="." method="_on_human_saw_milled"]
 [connection signal="milled" from="HumanSaw" to="Booster" method="_on_human_saw_milled"]

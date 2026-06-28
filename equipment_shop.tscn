@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cgeteahn776a8"]
+
+[ext_resource type="Script" uid="uid://bdkesglx0vckp" path="res://equipment_shop.gd" id="1_wpp6r"]
+[ext_resource type="Theme" uid="uid://3b6jfloh1m1l" path="res://UI/black_and_white_theme/black_and_white.tres" id="2_004m8"]
+[ext_resource type="PackedScene" uid="uid://dtugci1pwcgnd" path="res://equipment_shopping.tscn" id="3_tdy80"]
+
+[node name="EquipmentShop" type="Node2D" unique_id=1350957442]
+script = ExtResource("1_wpp6r")
+
+[node name="Control" type="Control" parent="." unique_id=1225656913]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_004m8")
+
+[node name="ShowButton" type="Button" parent="Control" unique_id=392381800]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "shop"
+
+[node name="ShopPanel" type="Panel" parent="Control" unique_id=1335405620]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 22.0
+offset_right = 41.0
+offset_bottom = 109.0
+mouse_filter = 2
+
+[node name="EquipmentShoppingManager" parent="Control/ShopPanel" unique_id=1537289304 instance=ExtResource("3_tdy80")]
+position = Vector2(20, 17)
+tier = 2
+price = 10.0
+
+[node name="EquipmentShoppingWorker" parent="Control/ShopPanel" unique_id=1037183573 instance=ExtResource("3_tdy80")]
+position = Vector2(19, 57)
+tier = 1
+price = 5.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/ShopPanel" unique_id=2038957948]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 70.0
+offset_right = 32.0
+offset_bottom = 82.0
+bbcode_enabled = true
+text = "10 [img]res://workstations/moneta.png[/img]"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Control/ShopPanel" unique_id=1902540772]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 29.0
+offset_right = 31.0
+offset_bottom = 41.0
+bbcode_enabled = true
+text = "20 [img]res://workstations/moneta.png[/img]"
+
+[connection signal="pressed" from="Control/ShowButton" to="." method="_on_show_button_pressed"]
+[connection signal="buy_equipment" from="Control/ShopPanel/EquipmentShoppingManager" to="." method="_on_equipment_shopping_manager_buy_equipment"]
+[connection signal="buy_equipment" from="Control/ShopPanel/EquipmentShoppingWorker" to="." method="_on_equipment_shopping_worker_buy_equipment"]

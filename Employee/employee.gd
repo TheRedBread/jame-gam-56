@@ -172,9 +172,19 @@ func _reset_to_idle():
 	state = State.IDLE
 
 func handle_no_satisfaction():
-	main_scene.do_text_popup("employee resigned", global_position + Vector2(0, -10))
+	Global.do_text_popup("employee resigned", global_position + Vector2(0, -10), self, Color.from_rgba8(79, 24, 4))
 	_reset_to_idle()
 	queue_free()
+
+func do_corruption_act():
+	if employee_type == EmployeeTypes.EmployeeType.FARMER:
+		$StealParticles.emitting = true
+		Global.do_text_popup("carrot stolen", global_position + Vector2(-20, -20), self, Color.from_rgba8(79, 24, 4))
+	if employee_type == EmployeeTypes.EmployeeType.WORKER:
+		$StealParticles.emitting = true
+		Global.do_text_popup("carrot stolen", global_position + Vector2(-20, -20), self, Color.from_rgba8(79, 24, 4))
+	if employee_type == EmployeeTypes.EmployeeType.MANAGER:
+		pass
 
 # -----------------------
 # MOVEMENT
@@ -200,7 +210,7 @@ func _find_station() -> void:
 		return
 	var stations: Array[WorkStation] = []
 	for child in current_zone.get_children():
-		if child is WorkStation and child.is_available():
+		if child is WorkStation and child.is_available() and child.has_work_to_do:
 			stations.append(child)
 	stations.sort_custom(func(a: WorkStation, b: WorkStation):
 		return global_position.distance_squared_to(a.global_position) < \
@@ -225,8 +235,6 @@ func start_drag():
 
 
 func stop_drag():
-	
-	
 	SoundManager.play_sound(RABBIT_DROP)
 	if DragManager.dragged_employee == self:
 		DragManager.dragged_employee = null
@@ -262,7 +270,7 @@ func _apply_zone(zone: Area2D):
 	
 	var satisfaction_scale_amount = abs(previous_zone_tier_type - current_zone.tier_type)
 	if previous_zone_tier_type > current_zone.tier_type:
-		satisfaction = clampf(satisfaction - 0.1 * satisfaction_scale_amount, 0, 1)
+		satisfaction = clampf(satisfaction - 0.2 * satisfaction_scale_amount, 0, 1)
 		SoundManager.play_sound(RABBIT_DOWNGRADE)
 	if previous_zone_tier_type < current_zone.tier_type:
 		satisfaction = clampf(satisfaction + 0.1 * satisfaction_scale_amount, 0, 1)

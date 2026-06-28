@@ -40,6 +40,7 @@ func _process(delta: float) -> void:
 	%ClockLine.rotation_degrees = -360 * $PayTimer.time_left/$PayTimer.wait_time
 	update_employee_prices()
 	handle_camera(delta)
+	calculate_manager_bonus_price()
 	
 func update_employee_prices():
 	%EmployeePriceLabel.text = "Employees Cost: " + str(get_employees_payment())
@@ -53,6 +54,15 @@ func get_employees_with_tier_type(type : EmployeeTypes.EmployeeType) -> Array:
 		if employee.employee_type == type:
 			employee_array.append(employee)
 	return employee_array
+
+func calculate_manager_bonus_price():
+	var managers = get_employees_with_tier_type(EmployeeTypes.EmployeeType.MANAGER)
+	var working_managers : Array
+	for manager : Employee in managers:
+		if manager.state == Employee.State.WORKING:
+			working_managers.append(manager)
+	Global.processed_carrots_value_manager_bonus = working_managers.size()*0.5
+	
 
 func _pay(amount : float) -> bool:
 	if amount > Global.carrots_currency:
@@ -100,7 +110,7 @@ func handle_camera(delta):
 func _on_human_saw_milled() -> void:
 	%MillTimer.start()
 	for employee in get_employees():
-		employee.satisfaction -= 0.1
+		employee.satisfaction -= 0.2
 
 
 func _on_fertilize_button_pressed() -> void:

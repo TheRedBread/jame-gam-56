@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 
 func update_shop_items():
 	update_shop_item(%CarrotsSell, Global.carrots, 1, "Carrots")
-	update_shop_item(%ProcessedCarrotsSell, Global.processed_carrots, Global.processed_carrots_value, "Processed Carrots")
+	update_shop_item(%ProcessedCarrotsSell, Global.processed_carrots, Global.get_processed_carrots_value(), "Processed Carrots")
 
 func find_child_of_type_and_substr(parent, type, substr):
 	for child in parent.get_children():
@@ -67,6 +67,6 @@ func _on_processed_carrot_sell_button_pressed() -> void:
 		SoundManager.action_fail()
 		return
 	SoundManager.play_sound(CASH)
-	Global.carrots_currency += Global.processed_carrots * Global.processed_carrots_value
+	Global.carrots_currency += Global.processed_carrots * Global.get_processed_carrots_value()
 	Global.processed_carrots = 0
 	update_shop_items()

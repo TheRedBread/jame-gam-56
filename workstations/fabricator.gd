@@ -31,7 +31,7 @@ func handle_animation():
 		$ButtonAnimationPlayer.play("press_button")
 
 func work(delta, employee):
-	progress -= ((employee.working_speed)*delta*60)/3
+	progress -= ((employee.working_speed)*delta*60)/2
 	$ProgressBar.value = init_progress - progress
 	if (progress <= 0):
 		finish_work()

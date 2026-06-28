@@ -147,6 +147,7 @@ alignment = 0
 icon_alignment = 2
 
 [node name="FabricatorCounterContainer" type="PanelContainer" parent="." unique_id=201590432]
+z_index = 4
 offset_left = 88.0
 offset_top = 171.0
 offset_right = 121.0

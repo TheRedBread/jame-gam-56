@@ -73,7 +73,7 @@ func calculate_stats():
 	satisfaction = clampf(satisfaction, 0, 1)
 	
 	corruption += (corruption_predisposition + ((wage_expectancy * get_average_payment_of_type() - get_current_payment()) - (satisfaction/10)))/60
-	corruption = clampf((corruption + (corruption_predisposition/20))*0.5 + (1-satisfaction)*0.5, 0, 1) 
+	corruption = clampf((corruption + (corruption_predisposition/30))*0.5 + (1-satisfaction)*0.5, 0, 1) 
 	working_speed = (satisfaction + 0.5) * base_working_speed
 
 

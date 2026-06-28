@@ -10,6 +10,7 @@ const BLACK_AND_WHITE = preload("res://UI/black_and_white_theme/black_and_white.
 const CAMERA_SCROLL_MARGIN := 7 
 const CAMERA_SCROLL_SPEED := 400.0
 var employee_list : Array
+@onready var fabricated_counter: Label = %FabricatedCounter
 
 func get_current_pyramid():
 	return find_child("Pyramid")
@@ -35,7 +36,13 @@ func _process(delta: float) -> void:
 	%CarrotCounter.text = "CarrotCoins (cc): " + str(snappedf(Global.carrots_currency, 0.01)) 
 	$NewEmployeeButton.text = "Hire " + str(Global.employee_price) + "cc"
 	$FertilizeButton.text = "fertilze: " + str(Global.get_fertilize_price())
+	%FabricatedCounter.text = str(Global.carrots_in_process)
+	%ClockLine.rotation_degrees = -360 * $PayTimer.time_left/$PayTimer.wait_time
+	update_employee_prices()
 	handle_camera(delta)
+	
+func update_employee_prices():
+	%EmployeePriceLabel.text = "Employees Cost: " + str(get_employees_payment())
 
 func get_employees() -> Array:
 	return get_tree().get_nodes_in_group("employee")
@@ -54,11 +61,15 @@ func _pay(amount : float) -> bool:
 	return true
 	
 
-func _pay_employees():
+func get_employees_payment():
 	var farmers_count = get_employees_with_tier_type(EmployeeTypes.EmployeeType.FARMER).size()
 	var workers_count = get_employees_with_tier_type(EmployeeTypes.EmployeeType.WORKER).size()
 	var managers_count = get_employees_with_tier_type(EmployeeTypes.EmployeeType.MANAGER).size()
-	var payment = farmers_count*Global.farmer_paygrade + workers_count*Global.worker_paygrade + managers_count*Global.manager_paygrade
+	return farmers_count*Global.farmer_paygrade + workers_count*Global.worker_paygrade + managers_count*Global.manager_paygrade
+	
+
+func _pay_employees():
+	var payment = get_employees_payment()
 	
 	if (!_pay(payment)):
 		Global.farmer_paygrade = 0

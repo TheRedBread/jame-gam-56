@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bbt5ykuseuxky" path="res://workstations/human_saw.tscn" id="7_nfk4m"]
 [ext_resource type="Script" uid="uid://dwk0t13belu5p" path="res://booster.gd" id="8_66tet"]
 [ext_resource type="PackedScene" uid="uid://cgeteahn776a8" path="res://equipment_shop.tscn" id="9_7ycvg"]
+[ext_resource type="Texture2D" uid="uid://dcn2opnsjnmgl" path="res://UI/black_and_white_theme/icons/fabricator_icon.png" id="11_qwutr"]
+[ext_resource type="Texture2D" uid="uid://bglplpq78tkn8" path="res://UI/clock_table.png" id="12_671wp"]
 
 [node name="MainScene" type="Node2D" unique_id=235254048]
 script = ExtResource("1_0f027")
@@ -27,10 +29,10 @@ icon_alignment = 2
 [node name="Pyramid" parent="." unique_id=491428056 instance=ExtResource("2_2c62f")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=59252772]
-offset_left = 11.0
-offset_top = -1.0
-offset_right = 56.0
-offset_bottom = 39.0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 55.0
+offset_bottom = 21.0
 
 [node name="CarrotCounter" type="Label" parent="HBoxContainer" unique_id=493232259]
 unique_name_in_owner = true
@@ -43,14 +45,31 @@ layout_mode = 2
 texture = ExtResource("4_wr18j")
 stretch_mode = 3
 
+[node name="FullEmployeePriceHBox" type="HBoxContainer" parent="." unique_id=827601035]
+offset_left = 10.0
+offset_top = 25.0
+offset_right = 87.0
+offset_bottom = 40.0
+
+[node name="EmployeePriceLabel" type="Label" parent="FullEmployeePriceHBox" unique_id=1645611927]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_d5x1h")
+text = "Employees Cost: "
+
+[node name="TextureRect" type="TextureRect" parent="FullEmployeePriceHBox" unique_id=1128939425]
+layout_mode = 2
+texture = ExtResource("4_wr18j")
+stretch_mode = 3
+
 [node name="Node2D" type="Node2D" parent="." unique_id=1593547567]
 position = Vector2(85, 15)
 
 [node name="SellingInterface" parent="." unique_id=563713991 instance=ExtResource("3_gyfs4")]
 offset_left = 6.0
-offset_top = 41.0
+offset_top = 47.0
 offset_right = 6.0
-offset_bottom = 41.0
+offset_bottom = 47.0
 
 [node name="EmployeeInspectorMenu" parent="." unique_id=980859345 instance=ExtResource("5_8mm7a")]
 unique_name_in_owner = true
@@ -114,7 +133,7 @@ fill_mode = 3
 show_percentage = false
 
 [node name="EquipmentShop" parent="." unique_id=1350957442 instance=ExtResource("9_7ycvg")]
-position = Vector2(8, 122)
+position = Vector2(7, 129)
 
 [node name="FertilizeButton" type="Button" parent="." unique_id=2131669031]
 offset_left = 24.0
@@ -126,6 +145,44 @@ text = "fertilize: "
 icon = ExtResource("4_wr18j")
 alignment = 0
 icon_alignment = 2
+
+[node name="FabricatorCounterContainer" type="PanelContainer" parent="." unique_id=201590432]
+offset_left = 88.0
+offset_top = 171.0
+offset_right = 121.0
+offset_bottom = 185.0
+theme = ExtResource("2_d5x1h")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FabricatorCounterContainer" unique_id=1367251363]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="FabricatorCounterContainer/HBoxContainer" unique_id=375764117]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("11_qwutr")
+
+[node name="FabricatedCounter" type="Label" parent="FabricatorCounterContainer/HBoxContainer" unique_id=1954864460]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_d5x1h")
+text = " 0"
+
+[node name="Clock" type="Node2D" parent="." unique_id=2000294799]
+position = Vector2(21, 266)
+
+[node name="ClockSprite" type="Sprite2D" parent="Clock" unique_id=294063681]
+texture = ExtResource("12_671wp")
+
+[node name="ClockLine" type="Node2D" parent="Clock" unique_id=1338094733]
+unique_name_in_owner = true
+
+[node name="Line2D" type="Line2D" parent="Clock/ClockLine" unique_id=64585068]
+position = Vector2(0, 0.5)
+points = PackedVector2Array(0, 0, 0, -11)
+width = 1.0
+default_color = Color(1, 0.63529414, 0.20784314, 1)
 
 [connection signal="pressed" from="NewEmployeeButton" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="PayTimer" to="." method="_on_pay_timer_timeout"]

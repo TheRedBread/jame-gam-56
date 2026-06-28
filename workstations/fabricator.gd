@@ -47,7 +47,7 @@ func finish_work():
 				break
 		
 		if caught:
-			reserved_by.corruption = clampf(reserved_by.corruption - 0.5, 0, 1)
+			reserved_by.corruption = clampf(reserved_by.corruption - 0.1, 0, 1)
 			Global.processed_carrots += 1
 			Global.do_text_popup("theft detected", reserved_by.global_position + Vector2(-20, -20), reserved_by, Color.from_rgba8(81, 169, 79))
 		else:
